@@ -20,6 +20,9 @@ public class KnnTest {
 
     public static void main(final String[] args) {
         // Create some features with test data
+
+
+
         final Feature<Integer>[][] features = new Feature[3][];
         features[0] = new Feature[]{
                 new Feature(classOne, "attribute_one", 5.2),
