@@ -55,4 +55,9 @@ public class Feature<T> implements Comparable<Feature<T>> {
     public int compareTo(final Feature<T> feature) {
         return Double.compare(distance, feature.distance);
     }
+
+    @Override
+    public String toString(){
+        return type;
+    }
 }
