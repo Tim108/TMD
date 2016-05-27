@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainRun {
-    public static void main(String[] args) {
+    public static void randomforest(int numTrees) {
 
         System.out.println("Random-Forest with Categorical support");
 
         String DataInfo, traindata, testdata, foraccuracy, withthreads;
-        int numTrees, numThreads, numAttris, Ms;
-        numAttris = 30;
+        int numThreads, numAttris, Ms;
+        numAttris = 0;
         numThreads = 1;
-        numTrees = 1;
         traindata = "data/training/featuresMixedTrain.csv";
         testdata = "data/testing/featuresMixedTest.csv";
         DataInfo = "N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,L";
@@ -42,6 +41,6 @@ public class MainRun {
         int C = Classes.size();
         RandomForest RFC = new RandomForest(DataLayout, numTrees, numThreads, M, Ms, C, Train, Test);
         RFC.Start(true, true);
-        // JUST HAVE A TESTFILE OF 115200 ROWS, THAT EQUALS TO 16 HOURS OF ACTIVITY. THEN IT SHOULD BE CLEAR HOW MUCH POWER IT USES.
+        // JUST HAVE A TESTFILE OF 1920 ROWS, THAT EQUALS TO 16 HOURS OF ACTIVITY. THEN IT SHOULD BE CLEAR HOW MUCH POWER IT USES.
     }
 }
