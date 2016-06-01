@@ -1,8 +1,11 @@
 package methods.randomforest;
 
+import methods.Datas;
+import methods.Datasf1;
+import methods.Datasf140;
+import methods.Datasf1a;
+
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DescribeTrees {
@@ -20,52 +23,51 @@ public class DescribeTrees {
 
         ArrayList<ArrayList<String>> DataInput = new ArrayList<ArrayList<String>>();
 
-        try {
+        String sCurrentLine;
 
-            String sCurrentLine;
-            BR = new BufferedReader(new FileReader(path));
+        Datas d = new Datasf1a();
 
-            while ((sCurrentLine = BR.readLine()) != null) {
-                ArrayList<Integer> Sp = new ArrayList<Integer>();
-                int i;
-                if (sCurrentLine != null) {
-                    if (sCurrentLine.indexOf(",") >= 0) {
-                        //has comma
+        String data = "";
+        if (path.equals("train"))
+            data = d.getTraindata();
+        else if (path.equals("test"))
+            data = d.getTestdata();
+        else System.out.println("it should be either 'train' or 'test'");
 
-                        sCurrentLine = "," + sCurrentLine + ",";
-                        char[] c = sCurrentLine.toCharArray();
-                        for (i = 0; i < sCurrentLine.length(); i++) {
-                            if (c[i] == ',')
-                                Sp.add(i);
-                        }
-                        ArrayList<String> DataPoint = new ArrayList<String>();
-                        for (i = 0; i < Sp.size() - 1; i++) {
-                            DataPoint.add(sCurrentLine.substring(Sp.get(i) + 1, Sp.get(i + 1)).trim());
-                        }
-                        DataInput.add(DataPoint);//System.out.println(DataPoint);
-                    } else if (sCurrentLine.indexOf(" ") >= 0) {
-                        //has spaces
-                        sCurrentLine = " " + sCurrentLine + " ";
-                        for (i = 0; i < sCurrentLine.length(); i++) {
-                            if (Character.isWhitespace(sCurrentLine.charAt(i)))
-                                Sp.add(i);
-                        }
-                        ArrayList<String> DataPoint = new ArrayList<String>();
-                        for (i = 0; i < Sp.size() - 1; i++) {
-                            DataPoint.add(sCurrentLine.substring(Sp.get(i), Sp.get(i + 1)).trim());
-                        }
-                        DataInput.add(DataPoint);//System.out.println(DataPoint);
+        String[] lines = data.split("\n");
+
+        for (int j = 0; j < lines.length; j++) {
+            sCurrentLine = lines[j];
+            ArrayList<Integer> Sp = new ArrayList<Integer>();
+            int i;
+            if (sCurrentLine != null) {
+                if (sCurrentLine.indexOf(",") >= 0) {
+                    //has comma
+
+                    sCurrentLine = "," + sCurrentLine + ",";
+                    char[] c = sCurrentLine.toCharArray();
+                    for (i = 0; i < sCurrentLine.length(); i++) {
+                        if (c[i] == ',')
+                            Sp.add(i);
                     }
+                    ArrayList<String> DataPoint = new ArrayList<String>();
+                    for (i = 0; i < Sp.size() - 1; i++) {
+                        DataPoint.add(sCurrentLine.substring(Sp.get(i) + 1, Sp.get(i + 1)).trim());
+                    }
+                    DataInput.add(DataPoint);//System.out.println(DataPoint);
+                } else if (sCurrentLine.indexOf(" ") >= 0) {
+                    //has spaces
+                    sCurrentLine = " " + sCurrentLine + " ";
+                    for (i = 0; i < sCurrentLine.length(); i++) {
+                        if (Character.isWhitespace(sCurrentLine.charAt(i)))
+                            Sp.add(i);
+                    }
+                    ArrayList<String> DataPoint = new ArrayList<String>();
+                    for (i = 0; i < Sp.size() - 1; i++) {
+                        DataPoint.add(sCurrentLine.substring(Sp.get(i), Sp.get(i + 1)).trim());
+                    }
+                    DataInput.add(DataPoint);//System.out.println(DataPoint);
                 }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (BR != null) BR.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
         }
 
@@ -110,7 +112,7 @@ public class DescribeTrees {
      * C-Categorical/Alphabetical/Numerical
      * I-Ignore Attribute
      * L-Label - last of the fields
-     * <p>
+     * <p/>
      * dataInfo
      *
      * @return

@@ -3,8 +3,8 @@ package methods.randomforest;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainRun {
-    public static void randomforest(int numTrees) {
+public class Forest {
+    public void randomforest(int numTrees) {
 
         System.out.println("Random-Forest with Categorical support");
 
@@ -12,12 +12,11 @@ public class MainRun {
         int numThreads, numAttris, Ms;
         numAttris = 0;
         numThreads = 1;
-        traindata = "data/training/featuresMixedTrain.csv";
-        testdata = "data/testing/featuresMixedTest.csv";
-        DataInfo = "N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,L";
-        DescribeTrees DT = new DescribeTrees(traindata, DataInfo);
-        ArrayList<ArrayList<String>> Train = DT.CreateInputCateg(traindata, DataInfo);
-        ArrayList<ArrayList<String>> Test = DT.CreateInputCateg(testdata, DataInfo);
+        //DataInfo = "N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,L";
+        DataInfo = "N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,L";
+        DescribeTrees DT = new DescribeTrees("train", DataInfo);
+        ArrayList<ArrayList<String>> Train = DT.CreateInputCateg("train", DataInfo);
+        ArrayList<ArrayList<String>> Test = DT.CreateInputCateg("test", DataInfo);
         ArrayList<Character> DataLayout = DT.CreateFinalLayout(DataInfo);
 
         /**

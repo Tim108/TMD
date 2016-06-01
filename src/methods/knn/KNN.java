@@ -1,7 +1,9 @@
 package methods.knn;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import methods.Datas;
+import methods.Datasf1;
+import methods.Datasf140;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,10 +11,7 @@ import java.util.Map;
 /**
  * Created by Tim on 25/05/2016.
  */
-public class MainRun {
-
-    private static final String pathtTrain = "data/training/featuresMixedTrain.csv";
-    private static final String pathTest = "data/testing/featuresMixedTest.csv";
+public class KNN {
 
     private static final int numFeatures = 30;
 
@@ -21,16 +20,17 @@ public class MainRun {
     private static final String cycling = "cycling";
     private static final String car = "car";
 
-    public static void knn() {
+    public void knn() {
         long starttime = System.currentTimeMillis();
         ArrayList<Feature<Integer>>[] data = new ArrayList[numFeatures];
         for (int i = 0; i < numFeatures; i++) {
             data[i] = new ArrayList<>();
         }
-        try {
-            BufferedReader BR = new BufferedReader(new FileReader(pathtTrain));
-            String line;
-            while ((line = BR.readLine()) != null) {
+        Datas d = new Datasf1();
+        String[] lines = d.getTraindata().split("\n");
+
+            for(int i = 0; i<lines.length; i++) {
+                String line = lines[i];
                 //read, split line
                 String[] words = line.split(",");
 
@@ -49,10 +49,10 @@ public class MainRun {
                 else System.out.println("### shit fucked up");
 
                 // parse the attributes to doubles
-                for (int i = 0; i < numFeatures; i++) {
-                    Double d = Double.parseDouble(words[i]);
-                    Feature f = new Feature(c, "" + i, d);
-                    data[i].add(f);
+                for (int j = 0; j < numFeatures; j++) {
+                    Double dub = Double.parseDouble(words[j]);
+                    Feature f = new Feature(c, "" + j, dub);
+                    data[j].add(f);
                 }
             }
 
@@ -83,8 +83,12 @@ public class MainRun {
             int total = 0;
             int correct = 0;
 //            System.out.println("Expected\t\t\t\tResult");
-            BR = new BufferedReader(new FileReader(pathTest));
-            while ((line = BR.readLine()) != null) {
+
+        lines = d.getTestdata().split("\n");
+
+            for(int i = 0; i<lines.length; i++) {
+                String line = lines[i];
+
                 //read, split line
                 String[] words = line.split(",");
 
@@ -94,8 +98,8 @@ public class MainRun {
                 }
 
                 Map<String, Double> attributes = new HashMap<String, Double>();
-                for (int i = 0; i < numFeatures; i++) {
-                    attributes.put("" + i, Double.parseDouble(words[i]));
+                for (int j = 0; j < numFeatures; j++) {
+                    attributes.put("" + j, Double.parseDouble(words[j]));
                 }
 
                 Instance<String> instance = new Instance(attributes);
@@ -118,8 +122,5 @@ public class MainRun {
             s-=(m*60);
             System.out.println(""+h+"hr "+m+"m "+s+"sec");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
