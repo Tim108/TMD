@@ -10,7 +10,7 @@ public class TMD {
 
     public static void main(String[] args) {
         System.out.println("You need to call the static method testIt(String method)");
-        testIt("randomforestl");
+        testIt("knn");
     }
 
     public static boolean testIt(String method) {
@@ -19,7 +19,7 @@ public class TMD {
         if (method.equals("decisiontree"))
             forest.randomforest(1);
         else if (method.equals("randomforest"))
-            forest.randomforest(5);
+            forest.randomforest(8);
         else if (method.equals("knn"))
             knn.knn();
         else {

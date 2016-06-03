@@ -1,11 +1,11 @@
 package methods.randomforest;
 
-import methods.Datas;
-import methods.Datasf1;
-import methods.Datasf140;
-import methods.Datasf1a;
+import methods.*;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class DescribeTrees {
@@ -25,16 +25,26 @@ public class DescribeTrees {
 
         String sCurrentLine;
 
-        Datas d = new Datasf1a();
+        //Datas d = new Datasf1at5();
 
-        String data = "";
-        if (path.equals("train"))
-            data = d.getTraindata();
-        else if (path.equals("test"))
-            data = d.getTestdata();
-        else System.out.println("it should be either 'train' or 'test'");
+        String content = "";
+        try {
+            content = new String(Files.readAllBytes(Paths.get("data/datasf1t5.csv")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        String[] lines = data.split("\n");
+        String[] data = content.split("\n");
+        int x = (int) Math.floor(data.length * 0.8);
+
+        String[] lines = {};
+        if (path.equals("train")) {
+            lines = new String[x];
+            System.arraycopy(data, 0, lines, 0, x);
+        } else if (path.equals("test")) {
+            lines = new String[data.length - x];
+            System.arraycopy(data, x, lines, 0, data.length - x);
+        } else System.out.println("it should be either 'train' or 'test'");
 
         for (int j = 0; j < lines.length; j++) {
             sCurrentLine = lines[j];
